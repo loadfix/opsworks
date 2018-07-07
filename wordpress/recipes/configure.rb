@@ -15,11 +15,18 @@ request = Net::HTTP::Get.new(uri.request_uri)
 response = http.request(request)
 keys = response.body
 
+# Create the wordpress directory
+directory "/srv/www/wordpress/" do
+  mode 0755
+  owner 'nginx'
+  group 'nginx'
+  action :create
+end
 
 # Create the Wordpress config file wp-config.php with corresponding values
 node[:deploy].each do |app_name, deploy|
 
-    template "#{deploy[:deploy_to]}/current/wp-config.php" do
+  template "#{deploy[:deploy_to]}/current/wp-config.php" do
         source "wp-config.php.erb"
         mode 0660
         group deploy[:group]
