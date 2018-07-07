@@ -15,6 +15,16 @@ request = Net::HTTP::Get.new(uri.request_uri)
 response = http.request(request)
 keys = response.body
 
+# Enable nginx
+service 'nginx' do
+  action :enable
+end
+
+# Start nginx
+service 'nginx' do
+  action :start
+end
+
 # Create the wordpress directory
 directory "/srv/www/wordpress/current/" do
   mode 0755
