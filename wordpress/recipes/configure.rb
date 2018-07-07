@@ -47,6 +47,7 @@ node[:deploy].each do |app_name, deploy|
           owner "nginx"
         end
     end
+end
 
 # Create a Cronjob for Wordpress
 cron "wordpress" do
