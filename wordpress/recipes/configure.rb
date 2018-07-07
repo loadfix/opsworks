@@ -36,14 +36,6 @@ node[:deploy].each do |app_name, deploy|
         elsif platform?("amazon")
           owner "nginx"
         end
-
-        variables(
-            :database   => (deploy[:database][:database]),
-            :user       => (deploy[:database][:username]),
-            :password   => (deploy[:database][:password]),
-            :host       => (deploy[:database][:host]),
-            :keys       => (keys)
-        )
     end
 
 
