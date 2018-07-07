@@ -16,7 +16,7 @@ response = http.request(request)
 keys = response.body
 
 # Create the wordpress directory
-directory "/srv/www/wordpress/" do
+directory "/srv/www/wordpress/current/" do
   mode 0755
   owner 'nginx'
   group 'nginx'
