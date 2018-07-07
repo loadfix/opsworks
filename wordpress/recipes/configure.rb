@@ -18,8 +18,8 @@ keys = response.body
 # Create the wordpress directory
 directory "/srv/www/wordpress/current/" do
   mode 0755
-  owner 'nginx'
-  group 'nginx'
+  owner deploy[:user]
+  group deploy[:group]
   action :create
 end
 
@@ -29,8 +29,18 @@ node[:deploy].each do |app_name, deploy|
   template "#{deploy[:deploy_to]}/current/wp-config.php" do
         source "wp-config.php.erb"
         mode 0660
-        owner "nginx"
-        group "nginx"
+        owner deploy[:user]
+        group deploy[:group]
+
+      variables(
+        :host =>     (deploy[:database][:host] rescue nil),
+        :user =>     (deploy[:database][:username] rescue nil),
+        :password => (deploy[:database][:password] rescue nil),
+        :db =>       (deploy[:database][:database] rescue nil),
+        :table =>    (node[:phpapp][:dbtable] rescue nil)
+    )
+
+
     end
 end
 
