@@ -9,4 +9,16 @@ node[:deploy].each do |application, deploy|
             system 'tar -xzf latest.tar.gz --strip-components=1 && rm latest.tar.gz'
         end
     end
+
+    template "/etc/nginx/conf.d/wordpress.conf" do
+        source "wordpress.conf.erb"
+        mode 0640
+        owner "root"
+        group "root"
+    end
+
+    # Start nginx
+    service 'nginx' do
+        action :restart
+    end
 end
