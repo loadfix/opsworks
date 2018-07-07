@@ -25,7 +25,6 @@ node[:deploy].each do |app_name, deploy|
 
       variables(
         :keys =>     (keys rescue nil),
-        :domain =>   (deploy[:domains].first),
         :host =>     (deploy[:database][:host] rescue nil),
         :user =>     (deploy[:database][:username] rescue nil),
         :password => (deploy[:database][:password] rescue nil),
