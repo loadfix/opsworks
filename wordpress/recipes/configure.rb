@@ -14,6 +14,14 @@ request = Net::HTTP::Get.new(uri.request_uri)
 response = http.request(request)
 keys = response.body
 
+# Create the wordpress directory
+directory "#{deploy[:deploy_to]}/current/" do
+  owner deploy[:user]
+  group deploy[:group]
+  mode 0755
+end
+
+
 # Create the Wordpress config file wp-config.php with corresponding values
 node[:deploy].each do |app_name, deploy|
 
