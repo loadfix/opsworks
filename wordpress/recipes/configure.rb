@@ -25,6 +25,7 @@ node[:deploy].each do |application, deploy|
     owner deploy[:user]
     group deploy[:group]
     mode 0755
+    recursive true
   end
 
   template "#{deploy[:deploy_to]}/current/wp-config.php" do
