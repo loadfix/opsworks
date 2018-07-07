@@ -15,14 +15,6 @@ request = Net::HTTP::Get.new(uri.request_uri)
 response = http.request(request)
 keys = response.body
 
-# Create the wordpress directory
-directory "/srv/www/wordpress/current/" do
-  mode 0755
-  owner deploy[:user]
-  group deploy[:group]
-  action :create
-end
-
 # Create the Wordpress config file wp-config.php with corresponding values
 node[:deploy].each do |app_name, deploy|
 
@@ -33,10 +25,12 @@ node[:deploy].each do |app_name, deploy|
         group deploy[:group]
 
       variables(
-        :host =>     (cloudwatch[:database][:host] rescue nil),
-        :user =>     (cloudwatch[:database][:username] rescue nil),
-        :password => (cloudwatch[:database][:password] rescue nil),
-        :database => (cloudwatch[:database][:database] rescue nil)
+        :keys =>     (keys rescue nil),
+        :domain =>   (deploy[:domains].first)
+        :host =>     (deploy[:database][:host] rescue nil),
+        :user =>     (deploy[:database][:username] rescue nil),
+        :password => (deploy[:database][:password] rescue nil),
+        :database => (deploy[:database][:database] rescue nil)
     )
 
 
