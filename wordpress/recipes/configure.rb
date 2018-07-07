@@ -21,11 +21,7 @@ directory "#{deploy[:deploy_to]}/current/" do
   mode 0755
 end
 
-
-# Create the Wordpress config file wp-config.php with corresponding values
-node[:deploy].each do |app_name, deploy|
-
-  template "#{deploy[:deploy_to]}/current/wp-config.php" do
+template "#{deploy[:deploy_to]}/current/wp-config.php" do
         source "wp-config.php.erb"
         mode 0660
         owner deploy[:user]
@@ -38,10 +34,8 @@ node[:deploy].each do |app_name, deploy|
         :password => (deploy[:database][:password] rescue nil),
         :database => (deploy[:database][:database] rescue nil)
     )
-
-
-    end
 end
+
 
 # Create a Cronjob for Wordpress
 cron "wordpress" do
