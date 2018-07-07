@@ -16,10 +16,9 @@ request = Net::HTTP::Get.new(uri.request_uri)
 response = http.request(request)
 keys = response.body
 
-
-Chef::Log.debug("Node: #{deploy[:deploy_to]}")
-
 node[:deploy].each do |application, deploy|
+
+  Chef::Log.debug("Node: #{deploy[:deploy_to]}")
 
   # Create the wordpress directory
   directory "#{deploy[:deploy_to]}/current/" do
