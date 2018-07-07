@@ -21,19 +21,22 @@ directory "#{deploy[:deploy_to]}/current/" do
   mode 0755
 end
 
-template "#{deploy[:deploy_to]}/current/wp-config.php" do
-        source "wp-config.php.erb"
-        mode 0660
-        owner deploy[:user]
-        group deploy[:group]
+node[:deploy].each do |application, deploy|
 
-      variables(
-        :keys =>     (keys rescue nil),
-        :host =>     (deploy[:database][:host] rescue nil),
-        :user =>     (deploy[:database][:username] rescue nil),
-        :password => (deploy[:database][:password] rescue nil),
-        :database => (deploy[:database][:database] rescue nil)
+  template "#{deploy[:deploy_to]}/current/wp-config.php" do
+    source "wp-config.php.erb"
+    mode 0660
+    owner deploy[:user]
+    group deploy[:group]
+
+    variables(
+      :keys =>     (keys rescue nil),
+      :host =>     (deploy[:database][:host] rescue nil),
+      :user =>     (deploy[:database][:username] rescue nil),
+      :password => (deploy[:database][:password] rescue nil),
+      :database => (deploy[:database][:database] rescue nil)
     )
+  end
 end
 
 
