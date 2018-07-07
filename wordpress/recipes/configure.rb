@@ -2,6 +2,8 @@
 # - Creates the config file wp-config.php with MySQL data.
 # - Creates a Cronjob.
 
+Chef::Log.debug("Running wordpress configure...")
+
 require 'uri'
 require 'net/http'
 require 'net/https'
@@ -14,14 +16,17 @@ request = Net::HTTP::Get.new(uri.request_uri)
 response = http.request(request)
 keys = response.body
 
-# Create the wordpress directory
-directory "#{deploy[:deploy_to]}/current/" do
-  owner deploy[:user]
-  group deploy[:group]
-  mode 0755
-end
+
+Chef::Log.debug("Node: #{deploy[:deploy_to]}")
 
 node[:deploy].each do |application, deploy|
+
+  # Create the wordpress directory
+  directory "#{deploy[:deploy_to]}/current/" do
+    owner deploy[:user]
+    group deploy[:group]
+    mode 0755
+  end
 
   template "#{deploy[:deploy_to]}/current/wp-config.php" do
     source "wp-config.php.erb"
