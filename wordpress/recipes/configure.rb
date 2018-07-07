@@ -33,10 +33,10 @@ node[:deploy].each do |app_name, deploy|
         group deploy[:group]
 
       variables(
-        :host =>     (deploy[:database][:host] rescue nil),
-        :user =>     (deploy[:database][:username] rescue nil),
-        :password => (deploy[:database][:password] rescue nil),
-        :database => (deploy[:database][:database] rescue nil)
+        :host =>     (cloudwatch[:database][:host] rescue nil),
+        :user =>     (cloudwatch[:database][:username] rescue nil),
+        :password => (cloudwatch[:database][:password] rescue nil),
+        :database => (cloudwatch[:database][:database] rescue nil)
     )
 
 
