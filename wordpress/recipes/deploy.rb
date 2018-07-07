@@ -2,8 +2,8 @@ include_recipe 'deploy'
 
 node[:deploy].each do |application, deploy|
   opsworks_deploy_dir do
-    user deploy[:user]
-    group deploy[:group]
+    user "nginx"
+    group "nginx"
     path deploy[:deploy_to]
   end
 

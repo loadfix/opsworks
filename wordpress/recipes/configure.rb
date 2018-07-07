@@ -15,16 +15,6 @@ request = Net::HTTP::Get.new(uri.request_uri)
 response = http.request(request)
 keys = response.body
 
-# Enable nginx
-service 'nginx' do
-  action :enable
-end
-
-# Start nginx
-service 'nginx' do
-  action :start
-end
-
 # Create the wordpress directory
 directory "/srv/www/wordpress/current/" do
   mode 0755
@@ -39,13 +29,8 @@ node[:deploy].each do |app_name, deploy|
   template "#{deploy[:deploy_to]}/current/wp-config.php" do
         source "wp-config.php.erb"
         mode 0660
-        group deploy[:group]
-
-        if platform?("ubuntu")
-          owner "www-data"
-        elsif platform?("amazon")
-          owner "nginx"
-        end
+        owner "nginx"
+        group "nginx"
     end
 end
 
