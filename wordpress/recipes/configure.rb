@@ -38,11 +38,11 @@ node[:deploy].each do |app_name, deploy|
         end
 
         variables(
-            :database   => (deploy[:database][:database] rescue nil),
-            :user       => (deploy[:database][:username] rescue nil),
-            :password   => (deploy[:database][:password] rescue nil),
-            :host       => (deploy[:database][:host] rescue nil),
-            :keys       => (keys rescue nil)
+            :database   => (deploy[:database][:database]),
+            :user       => (deploy[:database][:username]),
+            :password   => (deploy[:database][:password]),
+            :host       => (deploy[:database][:host]),
+            :keys       => (keys)
         )
     end
 
