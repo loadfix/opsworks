@@ -1,7 +1,6 @@
 # AWS OpsWorks Recipe for Wordpress to be executed during the Configure lifecycle phase
 # - Creates the config file wp-config.php with MySQL data.
 # - Creates a Cronjob.
-# - Imports a database backup if it exists.
 
 require 'uri'
 require 'net/http'
@@ -26,7 +25,7 @@ node[:deploy].each do |app_name, deploy|
 
       variables(
         :keys =>     (keys rescue nil),
-        :domain =>   (deploy[:domains].first)
+        :domain =>   (deploy[:domains].first),
         :host =>     (deploy[:database][:host] rescue nil),
         :user =>     (deploy[:database][:username] rescue nil),
         :password => (deploy[:database][:password] rescue nil),
