@@ -18,6 +18,11 @@ end
 package 'php-fpm' do
   action :install
 end
+
+# Install php-mysql
+package 'php-mysql' do
+    action :install
+  end
   
 # Enable php-fpm
 service 'php-fpm' do
